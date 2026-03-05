@@ -1,39 +1,182 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APPLE GAMING FF - AKATSUKI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akatsuki Hologram Experience</title>
+    <style>
+        :root {
+            --akatsuki-red: #ff0000;
+        }
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050505;
+            color: white;
+            font-family: 'Cinzel', serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-body {
-    margin: 0;
-    padding: 0;
-    background: #050505; /* গভীর কালো ব্যাকগ্রাউন্ড */
-    font-family: 'Cinzel', serif; /* নিনজা স্টাইল ফন্ট */
-    overflow-x: hidden;
-    color: white;
-}
+        /* Moving Red Clouds Background */
+        .cloud-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-/* আকাতসুকি লাল মেঘের এনিমেশন */
-.bg-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, rgba(0, 0, 0, 1) 80%);
-    z-index: -1;
-}
+        .cloud {
+            position: absolute;
+            width: 250px;
+            height: 120px;
+            background: var(--akatsuki-red);
+            border-radius: 100px;
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: moveClouds 20s linear infinite;
+        }
 
-/* ব্যাকগ্রাউন্ড ইমেজ (ইটাচি) */
-.bg-img {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+        @keyframes moveClouds {
+            from { transform: translateX(-300px); }
+            to { transform: translateX(110vw); }
+        }
+
+        /* Hologram Card */
+        .hologram-card {
+            position: relative;
+            width: 350px;
+            padding: 20px;
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid var(--akatsuki-red);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%; height: 2px;
+            background: var(--akatsuki-red);
+            opacity: 0.6;
+            top: 0;
+            box-shadow: 0 0 10px var(--akatsuki-red);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .character-img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--akatsuki-red));
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.9; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.02); }
+        }
+
+        h2 { color: var(--akatsuki-red); letter-spacing: 2px; margin: 10px 0; font-size: 20px; }
+
+        /* Social Media Links Grid */
+        .social-links {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 11px;
+            padding: 10px 5px;
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            border-radius: 5px;
+            transition: 0.3s;
+            background: rgba(255, 0, 0, 0.1);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .social-links a:hover {
+            background: var(--akatsuki-red);
+            box-shadow: 0 0 15px var(--akatsuki-red);
+            transform: translateY(-2px);
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
+            font-size: 12px;
+        }
+
+        .next-btn:hover {
+            background: white;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="cloud-container">
+        <div class="cloud" style="top: 10%; animation-duration: 22s;"></div>
+        <div class="cloud" style="top: 45%; animation-duration: 16s; opacity: 0.15;"></div>
+        <div class="cloud" style="top: 75%; animation-duration: 28s;"></div>
+    </div>
+
+    <div class="hologram-card">
+        <div class="scan-line"></div>
+        <img id="char-image" class="character-img" src="https://static.wikia.nocookie.net/naruto/images/b/bb/Itachi_Uchiha_Full.png" alt="Akatsuki">
+        <h2 id="char-name">ITACHI UCHIHA</h2>
+        
+        <div class="social-links">
+            <a href="https://t.me/applegaming_ff" target="_blank">TG Channel</a>
+            <a href="https://youtube.com/@a1nx_gaming-b3i?si=IPpIH5kjYlgNOyjY" target="_blank">YouTube</a>
+            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" target="_blank">Private TG</a>
+            <a href="https://t.me/applegaming20" target="_blank">2nd Channel</a>
+        </div>
+
+        <button class="next-btn" onclick="nextCharacter()">Summon Next Member</button>
+    </div>
+
+    <script>
+        const members = [
+            { name: "ITACHI UCHIHA", img: "https://static.wikia.nocookie.net/naruto/images/b/bb/Itachi_Uchiha_Full.png" },
+            { name: "PAIN (NAGATO)", img: "https://static.wikia.nocookie.net/naruto/images/d/d1/Pain_Full.png" },
+            { name: "OBITO UCHIHA", img: "https://static.wikia.nocookie.net/naruto/images/4/4a/Obito_Uchiha_Full.png" },
+            { name: "KISAME HOSHIGAKI", img: "https://static.wikia.nocookie.net/naruto/images/5/5a/Kisame_Hoshigaki_Full.png" }
+        ];
+
+        let index = 0;
+        function nextCharacter() {
+            index = (index + 1) % members.length;
+            document.getElementById('char-name').innerText = members[index].name;
+            document.getElementById('char-image').src = members[index].img;
+        }
+    </script>
+</body>
+</html>
     height: 100%;
     object-fit: cover;
     opacity: 0.4; /* ছবিটা একটু ঝাপসা যাতে লিখা বুঝা যায় */
