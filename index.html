@@ -1,52 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APPLE GAMING FF - AKATSUKI</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
-body{
-margin:0;
-font-family:Arial;
-background:#000;
+body {
+    margin: 0;
+    padding: 0;
+    background: #050505; /* গভীর কালো ব্যাকগ্রাউন্ড */
+    font-family: 'Cinzel', serif; /* নিনজা স্টাইল ফন্ট */
+    overflow-x: hidden;
+    color: white;
 }
 
-.bg{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-1;
+/* আকাতসুকি লাল মেঘের এনিমেশন */
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, rgba(0, 0, 0, 1) 80%);
+    z-index: -1;
 }
 
-.box{
-background:rgba(0,0,0,0.6);
-margin:80px 20px;
-padding:40px;
-border-radius:20px;
-text-align:center;
+/* ব্যাকগ্রাউন্ড ইমেজ (ইটাচি) */
+.bg-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4; /* ছবিটা একটু ঝাপসা যাতে লিখা বুঝা যায় */
+    z-index: -2;
 }
 
-h1{
-color:white;
+.box {
+    background: rgba(0, 0, 0, 0.85);
+    margin: 50px auto;
+    padding: 40px 20px;
+    border-radius: 15px;
+    max-width: 350px;
+    text-align: center;
+    border: 2px solid #ff0000; /* লাল বর্ডার */
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); /* লাল গ্লো */
 }
 
-.btn{
-display:block;
-margin:15px 0;
-padding:14px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-font-weight:bold;
+h1 {
+    color: #ff0000;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px #000;
 }
 
-.tg{background:#2AABEE;}
-.yt{background:#FF0000;}
-.private{background:#8A2BE2;}
-.second{background:#00C853;}
+/* সব বাটনের কমন স্টাইল */
+.btn {
+    display: block;
+    margin: 15px 0;
+    padding: 14px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* আলাদা আলাদা কালার আকাতসুকি থিমের সাথে মিলিয়ে */
+.tg { background: #b22222; } /* Dark Red */
+.yt { background: #ff0000; } /* Bright Red */
+.private { background: #4a0000; } /* Maroon */
+.second { background: #1a1a1a; border: 1px solid #ff0000; } /* Black with Red Border */
+
+/* মেঘের এনিমেশন */
+.cloud {
+    position: absolute;
+    width: 100px;
+    opacity: 0.2;
+    animation: moveClouds 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveClouds {
+    from { left: -150px; }
+    to { left: 100%; }
+}
 
 </style>
 </head>
@@ -57,7 +109,11 @@ font-weight:bold;
   <div id="player"></div>
 </div>
 
-<img src="itachi.png" class="bg">
+<div class="bg-overlay"></div>
+<img src="itachi.png" class="bg-img">
+
+<div class="cloud" style="top: 10%;">☁️</div>
+<div class="cloud" style="top: 50%; animation-delay: 5s;">☁️</div>
 
 <div class="box">
 
@@ -74,7 +130,6 @@ font-weight:bold;
 </div>
 
 <script>
-  // Load the YouTube IFrame Player API code asynchronously.
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -103,11 +158,9 @@ font-weight:bold;
   }
 
   function onPlayerReady(event) {
-    // Attempt to autoplay. Browsers often block autoplay with sound unless there's interaction.
     event.target.playVideo();
   }
 
-  // To ensure the music plays, we'll trigger it on the first click on the page.
   window.addEventListener('click', function() {
     if (player && typeof player.playVideo === 'function') {
       player.playVideo();
