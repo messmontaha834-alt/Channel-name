@@ -3,47 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple Gaming FF - Premium Hub</title>
+    <title>Apple Gaming FF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-red: #ff0000;
-            --yt-red: #FF0000;
-            --tg-blue: #0088cc;
-        }
-
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            background-color: black;
             font-family: 'Segoe UI', sans-serif;
+            background-color: #000;
+            color: white;
+            overflow: hidden;
         }
 
-        /* Fullscreen Background Video Wrapper */
-        .video-container {
+        /* Background Image Setting */
+        .background-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: url('itachi.png'); /* Ensure itachi.png is in the same folder */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.5);
             z-index: -1;
-            overflow: hidden;
-        }
-
-        .video-container iframe {
-            width: 100vw;
-            height: 56.25vw;
-            min-height: 100vh;
-            min-width: 177.77vh;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            filter: brightness(0.4) contrast(1.1);
-            pointer-events: none;
         }
 
         .overlay {
@@ -52,7 +38,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 0;
         }
 
@@ -68,83 +54,88 @@
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 35px;
-            letter-spacing: 5px;
-            color: white;
+            font-size: 3rem;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            text-shadow: 0 0 15px var(--primary-red);
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px #ff0000;
         }
 
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            max-width: 600px;
+            max-width: 500px;
         }
 
-        .premium-btn {
+        .btn {
             text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: bold;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 18px 30px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            gap: 10px;
+            font-weight: bold;
         }
 
-        .yt-btn:hover { border-color: var(--yt-red); box-shadow: 0 0 20px rgba(255,0,0,0.5); transform: translateY(-5px); }
-        .tg-main:hover { border-color: var(--tg-blue); box-shadow: 0 0 20px rgba(0,136,204,0.5); transform: translateY(-5px); }
-        .tg-private:hover { border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); transform: translateY(-5px); }
-        .tg-second:hover { border-color: #00ff88; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); transform: translateY(-5px); }
+        .btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #ff0000;
+            transform: translateY(-5px);
+        }
 
-        .premium-btn:active { transform: scale(0.95); }
+        /* Hidden Audio Player (YouTube) */
+        #video-bg {
+            display: none;
+        }
 
         @media (max-width: 600px) {
             .links-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/00CUIoYH__8?autoplay=1&mute=1&loop=1&playlist=00CUIoYH__8&controls=0&modestbranding=1&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-        <div class="overlay"></div>
-    </div>
+    <div class="background-container"></div>
+    <div class="overlay"></div>
+
+    <iframe id="video-bg" 
+        src="https://www.youtube.com/embed/5NQ-gTgJFjw?autoplay=1&mute=0&loop=1&playlist=5NQ-gTgJFjw" 
+        allow="autoplay">
+    </iframe>
 
     <div class="content">
         <h1>APPLE GAMING FF</h1>
         
         <div class="links-grid">
-            <a href="https://youtube.com/@a1nx_gaming-b3i?si=IPpIH5kjYlgNOyjY" class="premium-btn yt-btn" target="_blank">
-                <i class="fab fa-youtube"></i>
-                <span>YouTube</span>
+            <a href="https://youtube.com/@a1nx_gaming-b3i" class="btn" target="_blank">
+                <i class="fab fa-youtube"></i> YouTube
             </a>
-
-            <a href="https://t.me/applegaming_ff" class="premium-btn tg-main" target="_blank">
-                <i class="fab fa-telegram-plane"></i>
-                <span>Main Channel</span>
+            <a href="https://t.me/applegaming_ff" class="btn" target="_blank">
+                <i class="fab fa-telegram-plane"></i> Telegram
             </a>
-
-            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="premium-btn tg-private" target="_blank">
-                <i class="fas fa-user-shield"></i>
-                <span>Private Group</span>
+            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="btn" target="_blank">
+                <i class="fas fa-user-shield"></i> Private
             </a>
-
-            <a href="https://t.me/applegaming20" class="premium-btn tg-second" target="_blank">
-                <i class="fas fa-paper-plane"></i>
-                <span>2nd Channel</span>
+            <a href="https://t.me/applegaming20" class="btn" target="_blank">
+                <i class="fas fa-paper-plane"></i> 2nd Channel
             </a>
         </div>
     </div>
+
+    <script>
+        window.addEventListener('click', () => {
+            const iframe = document.getElementById('video-bg');
+            // This ensures sound plays if browser blocked it initially
+            iframe.src = iframe.src.replace("mute=1", "mute=0");
+        }, { once: true });
+    </script>
 
 </body>
 </html>
