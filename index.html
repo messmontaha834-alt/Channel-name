@@ -3,313 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akatsuki Hologram Experience</title>
+    <title>Akatsuki Privacy - Itachi Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --akatsuki-red: #ff0000;
+            --primary-red: #ff0000;
+            --yt-red: #FF0000;
+            --tg-blue: #0088cc;
+            --tg-dark: #004d73;
         }
 
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #050505;
-            color: white;
-            font-family: 'Cinzel', serif;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+            background-color: black;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Fullscreen Background Video Wrapper */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            width: 100vw;
+            height: 56.25vw; /* 16:9 ratio */
+            min-height: 100vh;
+            min-width: 177.77vh; /* 16:9 ratio */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: brightness(0.5) contrast(1.2);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-
-        /* Moving Red Clouds Background */
-        .cloud-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .cloud {
-            position: absolute;
-            width: 250px;
-            height: 120px;
-            background: var(--akatsuki-red);
-            border-radius: 100px;
-            filter: blur(60px);
-            opacity: 0.3;
-            animation: moveClouds 20s linear infinite;
-        }
-
-        @keyframes moveClouds {
-            from { transform: translateX(-300px); }
-            to { transform: translateX(110vw); }
-        }
-
-        /* Hologram Card */
-        .hologram-card {
-            position: relative;
-            width: 350px;
-            padding: 20px;
-            background: rgba(15, 15, 15, 0.9);
-            border: 1px solid var(--akatsuki-red);
-            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
         }
 
-        .scan-line {
-            position: absolute;
-            width: 100%; height: 2px;
-            background: var(--akatsuki-red);
-            opacity: 0.6;
-            top: 0;
-            box-shadow: 0 0 10px var(--akatsuki-red);
-            animation: scan 3s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        .character-img {
-            width: 100%;
-            height: 220px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px var(--akatsuki-red));
-            animation: flicker 1.5s infinite alternate;
-        }
-
-        @keyframes flicker {
-            0% { opacity: 0.9; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.02); }
-        }
-
-        h2 { color: var(--akatsuki-red); letter-spacing: 2px; margin: 10px 0; font-size: 20px; }
-
-        /* Social Media Links Grid */
-        .social-links {
-            margin-top: 15px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .social-links a {
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            letter-spacing: 8px;
             color: white;
-            text-decoration: none;
-            font-size: 11px;
-            padding: 10px 5px;
-            border: 1px solid rgba(255, 0, 0, 0.4);
-            border-radius: 5px;
-            transition: 0.3s;
-            background: rgba(255, 0, 0, 0.1);
-            font-weight: bold;
             text-transform: uppercase;
+            text-shadow: 0 0 20px var(--primary-red), 0 0 40px rgba(255, 0, 0, 0.5);
         }
 
-        .social-links a:hover {
-            background: var(--akatsuki-red);
-            box-shadow: 0 0 15px var(--akatsuki-red);
-            transform: translateY(-2px);
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
         }
 
-        .next-btn {
-            margin-top: 20px;
-            background: transparent;
-            border: 1px solid white;
-            color: white;
-            padding: 8px 20px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.3s;
-            font-size: 12px;
-        }
-
-        .next-btn:hover {
-            background: white;
-            color: black;
+        .premium-btn {
+            text-decoration: none;
+            font-size: 1.1rem;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px 40px;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            width: 250px;
+        }
+
+        /* Specific Button Styles */
+        .yt-btn:hover { border-color: var(--yt-red); box-shadow: 0 0 30px rgba(255,0,0,0.6); transform: translateY(-8px) scale(1.05); }
+        .tg-main:hover { border-color: var(--tg-blue); box-shadow: 0 0 30px rgba(0,136,204,0.6); transform: translateY(-8px) scale(1.05); }
+        .tg-private:hover { border-color: #ffd700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); transform: translateY(-8px) scale(1.05); }
+        .tg-second:hover { border-color: #00ff88; box-shadow: 0 0 30px rgba(0, 255, 136, 0.4); transform: translateY(-8px) scale(1.05); }
+
+        .premium-btn:active { transform: scale(0.9); }
+
+        i { font-size: 1.6rem; }
+
+        @media (max-width: 600px) {
+            .links-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="cloud-container">
-        <div class="cloud" style="top: 10%; animation-duration: 22s;"></div>
-        <div class="cloud" style="top: 45%; animation-duration: 16s; opacity: 0.15;"></div>
-        <div class="cloud" style="top: 75%; animation-duration: 28s;"></div>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/00CUIoYH__8?autoplay=1&mute=1&loop=1&playlist=00CUIoYH__8&controls=0&showinfo=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+        <div class="overlay"></div>
     </div>
 
-    <div class="hologram-card">
-        <div class="scan-line"></div>
-        <img id="char-image" class="character-img" src="https://static.wikia.nocookie.net/naruto/images/b/bb/Itachi_Uchiha_Full.png" alt="Akatsuki">
-        <h2 id="char-name">ITACHI UCHIHA</h2>
+    <div class="content">
+        <h1>AKATSUKI PRIVACY</h1>
         
-        <div class="social-links">
-            <a href="https://t.me/applegaming_ff" target="_blank">TG Channel</a>
-            <a href="https://youtube.com/@a1nx_gaming-b3i?si=IPpIH5kjYlgNOyjY" target="_blank">YouTube</a>
-            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" target="_blank">Private TG</a>
-            <a href="https://t.me/applegaming20" target="_blank">2nd Channel</a>
+        <div class="links-grid">
+            <a href="https://youtube.com/@a1nx_gaming-b3i?si=IPpIH5kjYlgNOyjY" class="premium-btn yt-btn" target="_blank">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+
+            <a href="https://t.me/applegaming_ff" class="premium-btn tg-main" target="_blank">
+                <i class="fab fa-telegram-plane"></i>
+                <span>Main Channel</span>
+            </a>
+
+            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="premium-btn tg-private" target="_blank">
+                <i class="fas fa-user-shield"></i>
+                <span>Private Group</span>
+            </a>
+
+            <a href="https://t.me/applegaming20" class="premium-btn tg-second" target="_blank">
+                <i class="fas fa-paper-plane"></i>
+                <span>2nd Channel</span>
+            </a>
         </div>
-
-        <button class="next-btn" onclick="nextCharacter()">Summon Next Member</button>
     </div>
-
-    <script>
-        const members = [
-            { name: "ITACHI UCHIHA", img: "https://static.wikia.nocookie.net/naruto/images/b/bb/Itachi_Uchiha_Full.png" },
-            { name: "PAIN (NAGATO)", img: "https://static.wikia.nocookie.net/naruto/images/d/d1/Pain_Full.png" },
-            { name: "OBITO UCHIHA", img: "https://static.wikia.nocookie.net/naruto/images/4/4a/Obito_Uchiha_Full.png" },
-            { name: "KISAME HOSHIGAKI", img: "https://static.wikia.nocookie.net/naruto/images/5/5a/Kisame_Hoshigaki_Full.png" }
-        ];
-
-        let index = 0;
-        function nextCharacter() {
-            index = (index + 1) % members.length;
-            document.getElementById('char-name').innerText = members[index].name;
-            document.getElementById('char-image').src = members[index].img;
-        }
-    </script>
-</body>
-</html>
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.4; /* ছবিটা একটু ঝাপসা যাতে লিখা বুঝা যায় */
-    z-index: -2;
-}
-
-.box {
-    background: rgba(0, 0, 0, 0.85);
-    margin: 50px auto;
-    padding: 40px 20px;
-    border-radius: 15px;
-    max-width: 350px;
-    text-align: center;
-    border: 2px solid #ff0000; /* লাল বর্ডার */
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); /* লাল গ্লো */
-}
-
-h1 {
-    color: #ff0000;
-    font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 5px #000;
-}
-
-/* সব বাটনের কমন স্টাইল */
-.btn {
-    display: block;
-    margin: 15px 0;
-    padding: 14px;
-    border-radius: 5px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    transition: 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    text-transform: uppercase;
-}
-
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
-
-/* আলাদা আলাদা কালার আকাতসুকি থিমের সাথে মিলিয়ে */
-.tg { background: #b22222; } /* Dark Red */
-.yt { background: #ff0000; } /* Bright Red */
-.private { background: #4a0000; } /* Maroon */
-.second { background: #1a1a1a; border: 1px solid #ff0000; } /* Black with Red Border */
-
-/* মেঘের এনিমেশন */
-.cloud {
-    position: absolute;
-    width: 100px;
-    opacity: 0.2;
-    animation: moveClouds 20s linear infinite;
-    z-index: -1;
-}
-
-@keyframes moveClouds {
-    from { left: -150px; }
-    to { left: 100%; }
-}
-
-</style>
-</head>
-
-<body>
-
-<div style="position:fixed; top:-9999px; left:-9999px;">
-  <div id="player"></div>
-</div>
-
-<div class="bg-overlay"></div>
-<img src="itachi.png" class="bg-img">
-
-<div class="cloud" style="top: 10%;">☁️</div>
-<div class="cloud" style="top: 50%; animation-delay: 5s;">☁️</div>
-
-<div class="box">
-
-<h1>APPLE GAMING FF</h1>
-
-<a class="btn tg" href="https://t.me/applegaming_ff">TELEGRAM CHANNEL</a>
-
-<a class="btn yt" href="https://youtube.com/@a1nx_gaming-b3i?si=IPpIH5kjYlgNOyjY">YOUTUBE CHANNEL</a>
-
-<a class="btn private" href="https://t.me/+KeEY2ASQ4Z9mYjc9">PRIVATE TELEGRAM</a>
-
-<a class="btn second" href="https://t.me/applegaming20">SECOND TELEGRAM</a>
-
-</div>
-
-<script>
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '0',
-      width: '0',
-      videoId: '5NQ-gTgJFjw',
-      playerVars: {
-        'autoplay': 1,
-        'loop': 1,
-        'playlist': '5NQ-gTgJFjw',
-        'controls': 0,
-        'showinfo': 0,
-        'autohide': 1,
-        'modestbranding': 1,
-        'mute': 0 
-      },
-      events: {
-        'onReady': onPlayerReady
-      }
-    });
-  }
-
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
-
-  window.addEventListener('click', function() {
-    if (player && typeof player.playVideo === 'function') {
-      player.playVideo();
-    }
-  }, { once: true });
-</script>
 
 </body>
 </html>
