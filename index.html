@@ -7,111 +7,78 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #000;
-            color: white;
-            overflow: hidden;
+            background-color: #000; color: white; overflow: hidden;
         }
 
-        /* Background Image Setting */
+        /* Background Image - itachi.png must be in your GitHub repo */
         .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('itachi.png'); /* Ensure itachi.png is in the same folder */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('itachi.png') center/cover no-repeat;
             filter: brightness(0.5);
             z-index: -1;
         }
 
         .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4);
             z-index: 0;
         }
 
         .content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+            position: relative; z-index: 2;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; text-align: center;
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 5px;
+            font-size: 3.5rem; margin-bottom: 30px;
+            text-transform: uppercase; letter-spacing: 5px;
             text-shadow: 0 0 20px #ff0000;
         }
 
         .links-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 500px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 20px; max-width: 500px;
         }
 
         .btn {
-            text-decoration: none;
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px 25px;
-            border-radius: 10px;
+            text-decoration: none; color: white; background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px; border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
+            backdrop-filter: blur(8px); transition: 0.3s;
+            display: flex; align-items: center; gap: 10px; font-weight: bold;
         }
 
         .btn:hover {
-            background: rgba(255, 0, 0, 0.3);
-            border-color: #ff0000;
-            transform: translateY(-5px);
+            background: rgba(255, 0, 0, 0.4);
+            border-color: #ff0000; transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
 
-        /* Hidden Audio Player (YouTube) */
-        #video-bg {
-            display: none;
-        }
+        /* Hidden Youtube Player for Music */
+        #music-player { display: none; }
 
         @media (max-width: 600px) {
             .links-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2rem; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
-<body>
+<body onclick="playMusic()">
 
     <div class="background-container"></div>
     <div class="overlay"></div>
 
-    <iframe id="video-bg" 
+    <iframe id="music-player" 
         src="https://www.youtube.com/embed/5NQ-gTgJFjw?autoplay=1&mute=0&loop=1&playlist=5NQ-gTgJFjw" 
         allow="autoplay">
     </iframe>
 
     <div class="content">
         <h1>APPLE GAMING FF</h1>
+        <p style="margin-bottom: 20px; font-style: italic; opacity: 0.8;">Click anywhere to play music 🎵</p>
         
         <div class="links-grid">
             <a href="https://youtube.com/@a1nx_gaming-b3i" class="btn" target="_blank">
@@ -121,7 +88,7 @@
                 <i class="fab fa-telegram-plane"></i> Telegram
             </a>
             <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="btn" target="_blank">
-                <i class="fas fa-user-shield"></i> Private
+                <i class="fas fa-user-shield"></i> Private Group
             </a>
             <a href="https://t.me/applegaming20" class="btn" target="_blank">
                 <i class="fas fa-paper-plane"></i> 2nd Channel
@@ -130,11 +97,12 @@
     </div>
 
     <script>
-        window.addEventListener('click', () => {
-            const iframe = document.getElementById('video-bg');
-            // This ensures sound plays if browser blocked it initially
-            iframe.src = iframe.src.replace("mute=1", "mute=0");
-        }, { once: true });
+        function playMusic() {
+            var player = document.getElementById('music-player');
+            var currentSrc = player.src;
+            // Reload source on click to trigger play if blocked by browser
+            player.src = currentSrc;
+        }
     </script>
 
 </body>
