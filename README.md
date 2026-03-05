@@ -1,1 +1,2 @@
-# Channel-name
+# Channel-name APPLE-GAMING-FF 
+# CHANNEL-INFO OFFICIAL-CHANNAL
