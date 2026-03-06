@@ -2,108 +2,442 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple Gaming FF</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>APPLE GAMING FF · ULTRA PRO MAX</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-red: #ff1a1a;
+            --neon-glow: 0 0 15px #ff0000, 0 0 40px #aa0000;
+            --dark-bg: #0b0b0b;
+        }
+
         body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #000; color: white; overflow: hidden;
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background-color: black;
+            color: white;
+            overflow-x: hidden;
+            overflow-y: auto;      /* safe if content overflows, but we keep full view */
         }
 
-        /* Background Image - itachi.png must be in your GitHub repo */
+        /* ===== ULTRA DYNAMIC BACKGROUND ===== */
         .background-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url('itachi.png') center/cover no-repeat;
-            filter: brightness(0.5);
-            z-index: -1;
+            filter: brightness(0.45) saturate(1.2);
+            transform: scale(1.02);  /* subtle zoom against white edges */
+            z-index: -2;
+            will-change: transform;
+            animation: slowZoom 18s infinite alternate ease-in-out;
         }
 
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.07); }
+        }
+
+        /* advanced overlay: red-pulse + dark vignette */
         .overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 90%),
+                repeating-linear-gradient(45deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 20px, rgba(0,0,0,0.3) 20px, rgba(0,0,0,0.3) 40px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* additional moving light effect */
+        .overlay::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 60, 60, 0.1) 0%, transparent 50%);
+            animation: moveLight 12s infinite alternate;
+        }
+
+        @keyframes moveLight {
+            0% { transform: translate(0, 0); opacity: 0.3; }
+            100% { transform: translate(-3%, -2%); opacity: 0.7; }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px 16px 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* TITLE · ULTRA PRO MAX GLOW */
+        h1 {
+            font-size: clamp(2.6rem, 12vw, 5.2rem);
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff8f8, #ffc8c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 8px #ff0000, 0 0 20px #ff4d4d, 0 0 45px #a10000;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 15px crimson);
+            animation: textFlicker 3s infinite;
+        }
+
+        @keyframes textFlicker {
+            0% { opacity: 1; text-shadow: 0 0 8px red, 0 0 25px #f00; }
+            92% { opacity: 1; }
+            94% { opacity: 0.92; text-shadow: 0 0 15px red, 0 0 50px #ff5e5e; }
+            96% { opacity: 1; text-shadow: 0 0 5px darkred; }
+            98% { opacity: 0.95; text-shadow: 0 0 25px #ff3232; }
+            100% { opacity: 1; text-shadow: 0 0 8px red, 0 0 25px #f00; }
+        }
+
+        .sub-invite {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            background: rgba(10, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            padding: 10px 28px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 60, 60, 0.5);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffe7e7;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-invite i {
+            color: #ff3b3b;
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 8px red);
+        }
+
+        /* ===== LINK GRID — ULTRA RESPONSIVE ===== */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(150px, 280px));
+            gap: 22px;
+            max-width: 650px;
+            width: 100%;
+            margin: 20px 0 30px;
+        }
+
+        /* ULTRA PRO MAX BUTTONS */
+        .btn {
+            text-decoration: none;
+            color: white;
+            background: rgba(15, 15, 20, 0.4);
+            backdrop-filter: blur(12px);
+            padding: 18px 20px;
+            border-radius: 30px;
+            border: 1.5px solid rgba(255, 30, 30, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 10px rgba(255, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            transition: 0.25s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 50, 50, 0.4), transparent);
+            transition: left 0.6s;
             z-index: 0;
         }
 
-        .content {
-            position: relative; z-index: 2;
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; height: 100vh; text-align: center;
+        .btn:hover::before {
+            left: 100%;
         }
 
-        h1 {
-            font-size: 3.5rem; margin-bottom: 30px;
-            text-transform: uppercase; letter-spacing: 5px;
-            text-shadow: 0 0 20px #ff0000;
-        }
-
-        .links-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 20px; max-width: 500px;
-        }
-
-        .btn {
-            text-decoration: none; color: white; background: rgba(255, 255, 255, 0.1);
-            padding: 15px 25px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px); transition: 0.3s;
-            display: flex; align-items: center; gap: 10px; font-weight: bold;
+        .btn i {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 8px currentColor);
+            transition: 0.2s;
+            z-index: 2;
         }
 
         .btn:hover {
-            background: rgba(255, 0, 0, 0.4);
-            border-color: #ff0000; transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+            background: rgba(180, 0, 0, 0.5);
+            border-color: #ff5e5e;
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 16px 25px -5px black, 0 0 30px #ff0000;
         }
 
-        /* Hidden Youtube Player for Music */
-        #music-player { display: none; }
+        .btn:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 0 40px red;
+        }
 
-        @media (max-width: 600px) {
-            .links-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2.2rem; }
+        /* each brand color on hover */
+        .btn:hover .fa-youtube { color: #ff1a1a; text-shadow: 0 0 20px red; }
+        .btn:hover .fa-telegram-plane { color: #2a9df4; text-shadow: 0 0 20px #2a9df4; }
+        .btn:hover .fa-user-shield { color: #ffaa33; text-shadow: 0 0 20px gold; }
+        .btn:hover .fa-paper-plane { color: #ff6666; text-shadow: 0 0 20px #ff8585; }
+
+        /* ===== FLOATING MUSIC WIDGET (ULTRA) ===== */
+        .music-note {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 14px 18px;
+            border-radius: 60px;
+            border: 1px solid #ff3a3a;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            z-index: 999;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid red;
+        }
+
+        .music-note i {
+            font-size: 2rem;
+            color: #ff3b3b;
+            filter: drop-shadow(0 0 10px red);
+            animation: spinBeat 2.4s infinite;
+        }
+
+        @keyframes spinBeat {
+            0% { transform: rotate(0deg) scale(1); }
+            30% { transform: rotate(8deg) scale(1.15); }
+            60% { transform: rotate(-6deg) scale(1.05); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .music-note:hover {
+            background: #1f0000;
+            border-color: #ff8989;
+            transform: scale(1.05);
+            box-shadow: 0 0 40px red;
+        }
+
+        /* hidden youtube iframe */
+        #music-player {
+            display: none;
+        }
+
+        /* second channel link extra style */
+        .btn .fa-paper-plane {
+            color: #ff8a8a;
+        }
+
+        /* ===== RESPONSIVE TWEAKS ===== */
+        @media (max-width: 550px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .btn {
+                padding: 18px 22px;
+                font-size: 1.25rem;
+                justify-content: flex-start;
+            }
+
+            h1 {
+                font-size: 3.4rem;
+                letter-spacing: 2px;
+            }
+
+            .sub-invite {
+                font-size: 1rem;
+                padding: 8px 18px;
+            }
+        }
+
+        /* falling red glow particles (extra vibe) */
+        .particle {
+            position: fixed;
+            top: -10px;
+            background: rgba(255, 30, 30, 0.25);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            filter: blur(2px);
+            box-shadow: 0 0 20px red;
+            animation: fall 10s linear infinite;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) scale(1.8); opacity: 0; }
         }
     </style>
 </head>
-<body onclick="playMusic()">
+<body>
 
+    <!-- hidden background container with itachi.png -->
     <div class="background-container"></div>
     <div class="overlay"></div>
 
+    <!-- floating particles (javascript generated) -->
+    <div id="particle-field"></div>
+
+    <!-- ULTRA HIDDEN YOUTUBE PLAYER (autoplay with mute bypass) -->
     <iframe id="music-player" 
-        src="https://www.youtube.com/embed/5NQ-gTgJFjw?autoplay=1&mute=0&loop=1&playlist=5NQ-gTgJFjw" 
-        allow="autoplay">
+        src="https://www.youtube.com/embed/5NQ-gTgJFjw?autoplay=1&mute=1&loop=1&playlist=5NQ-gTgJFjw&controls=0&showinfo=0&modestbranding=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
     </iframe>
 
-    <div class="content">
+    <!-- MAIN CONTENT -->
+    <div class="content" onclick="forceMusicPlay()">
+        <!-- header -->
         <h1>APPLE GAMING FF</h1>
-        <p style="margin-bottom: 20px; font-style: italic; opacity: 0.8;">Click anywhere to play music 🎵</p>
         
+        <div class="sub-invite">
+            <i class="fas fa-play"></i> 
+            <span>click anywhere • unlimited power</span>
+            <i class="fas fa-infinity"></i>
+        </div>
+
+        <!-- grid links · ultra pro max -->
         <div class="links-grid">
-            <a href="https://youtube.com/@a1nx_gaming-b3i" class="btn" target="_blank">
+            <a href="https://youtube.com/@a1nx_gaming-b3i" class="btn" target="_blank" rel="noopener">
                 <i class="fab fa-youtube"></i> YouTube
             </a>
-            <a href="https://t.me/applegaming_ff" class="btn" target="_blank">
+            <a href="https://t.me/applegaming_ff" class="btn" target="_blank" rel="noopener">
                 <i class="fab fa-telegram-plane"></i> Telegram
             </a>
-            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="btn" target="_blank">
+            <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="btn" target="_blank" rel="noopener">
                 <i class="fas fa-user-shield"></i> Private Group
             </a>
-            <a href="https://t.me/applegaming20" class="btn" target="_blank">
+            <a href="https://t.me/applegaming20" class="btn" target="_blank" rel="noopener">
                 <i class="fas fa-paper-plane"></i> 2nd Channel
             </a>
         </div>
+
+        <!-- small extra detail: press to loop music -->
+        <div style="margin-top: 25px; opacity:0.7; font-size:0.9rem; display: flex; gap: 8px; background: rgba(0,0,0,0.3); padding: 6px 18px; border-radius: 40px; backdrop-filter: blur(3px);">
+            <i class="fas fa-headphones" style="color:#ff4f4f;"></i>
+            <span>itachi's awakening · click to restart music</span>
+        </div>
+    </div>
+
+    <!-- floating music activator (bottom right) -->
+    <div class="music-note" id="floatingMusicButton" onclick="forceMusicPlay()">
+        <i class="fas fa-music"></i>
+        <span>MUSIC ON</span>
+        <i class="fas fa-redo-alt" style="font-size: 1rem; opacity:0.9;"></i>
     </div>
 
     <script>
-        function playMusic() {
-            var player = document.getElementById('music-player');
-            var currentSrc = player.src;
-            // Reload source on click to trigger play if blocked by browser
+        // ========== ULTRA PRO MAX MUSIC FORCE (Bypass autoplay restrictions) ==========
+        function forceMusicPlay() {
+            const player = document.getElementById('music-player');
+            // re-inject src to force reload & play (user interaction)
+            // we use the same src but with autoplay=1 & mute=0 after click
+            // but careful: set to unmuted after first click
+            let currentSrc = player.src;
+            // if src includes mute=1, change to mute=0 for unmuted playback
+            if (currentSrc.includes('mute=1')) {
+                currentSrc = currentSrc.replace('mute=1', 'mute=0');
+            } else if (currentSrc.includes('mute=0')) {
+                // keep as is
+            } else {
+                // fallback: add autoplay params
+                currentSrc = 'https://www.youtube.com/embed/5NQ-gTgJFjw?autoplay=1&mute=0&loop=1&playlist=5NQ-gTgJFjw&controls=0&modestbranding=1';
+            }
             player.src = currentSrc;
+            // also try to play via api? but src reload is robust
+            console.log('🎵 Apple Gaming FF · music re-triggered');
         }
+
+        // trigger on any click on body (the whole page)
+        document.body.addEventListener('click', function(e) {
+            // ignore clicks on the floating button to avoid double reload? but it's fine
+            forceMusicPlay();
+        });
+
+        // also on touch for mobile
+        document.body.addEventListener('touchstart', function() {
+            forceMusicPlay();
+        });
+
+        // preload trick: try to call once after 1s anyway (might not play without click)
+        window.addEventListener('load', function() {
+            // tiny delay - but autoplay may be blocked, but we have the click handler.
+            setTimeout(() => {
+                // set an initial low-volume / muted attempt if needed? 
+                // we keep default iframe with mute=1 (so browser may allow autoplay muted)
+                console.log('iframe muted autoplay attempted');
+            }, 300);
+        });
+
+        // ========== FALLING RED PARTICLE BACKGROUND (ULTRA VIBE) ==========
+        function createParticles() {
+            const container = document.body; // or create dedicated div
+            for (let i = 0; i < 18; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                // random size
+                const size = Math.random() * 6 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 7 + 6) + 's'; // 6-13s
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+                particle.style.background = `rgba(255, ${Math.floor(20 + Math.random()*30)}, 30, ${0.2 + Math.random()*0.3})`;
+                particle.style.boxShadow = `0 0 ${Math.floor(10 + Math.random()*20)}px #ff0000`;
+                document.body.appendChild(particle);
+            }
+        }
+        window.addEventListener('load', createParticles);
+
+        // also: dynamic hover text for extra pro max? 
+        // add a subtle secondary class to buttons
     </script>
 
+    <!-- tiny extra inline to ensure that bg image is loaded (itachi.png) -->
+    <!-- if you want fallback color, bg container already uses itachi.png -->
 </body>
 </html>
