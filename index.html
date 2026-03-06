@@ -114,8 +114,8 @@
         }
 
         .sub-invite {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
             background: rgba(10, 0, 0, 0.5);
             backdrop-filter: blur(12px);
             padding: 10px 28px;
@@ -125,13 +125,87 @@
             font-weight: 400;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: #ffe7e7;
         }
 
         .sub-invite i {
             color: #ff3b3b;
             font-size: 1.6rem;
+            filter: drop-shadow(0 0 8px red);
+        }
+
+        /* Music info bar - shows song name */
+        .music-info-bar {
+            background: rgba(20, 0, 0, 0.7);
+            backdrop-filter: blur(16px);
+            padding: 12px 25px;
+            border-radius: 60px;
+            border: 1px solid #ff5e5e;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            color: #fff0f0;
+        }
+
+        .song-info i {
+            color: #ff4d4d;
+            font-size: 1.6rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); text-shadow: 0 0 20px red; }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .song-name {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background: linear-gradient(45deg, #fff, #ffb3b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Music control button - ON/OFF */
+        .music-control-btn {
+            background: rgba(255, 40, 40, 0.25);
+            border: 2px solid #ff4d4d;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .music-control-btn:hover {
+            background: rgba(255, 0, 0, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 0 30px red;
+        }
+
+        .music-control-btn i {
+            font-size: 1.8rem;
             filter: drop-shadow(0 0 8px red);
         }
 
@@ -195,47 +269,6 @@
             box-shadow: 0 16px 25px -5px black, 0 0 30px #ff0000;
         }
 
-        .btn:active {
-            transform: translateY(2px) scale(0.98);
-            box-shadow: 0 0 40px red;
-        }
-
-        /* ===== MUSIC WIDGET (now purely visual + auto-play) ===== */
-        .music-note {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
-            padding: 14px 18px;
-            border-radius: 60px;
-            border: 1px solid #ff3a3a;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            z-index: 999;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
-            pointer-events: none;  /* so clicks pass through, preventing accidental stop */
-            border-left: 4px solid red;
-        }
-
-        .music-note i {
-            font-size: 2rem;
-            color: #ff3b3b;
-            filter: drop-shadow(0 0 10px red);
-            animation: spinBeat 2.4s infinite;
-        }
-
-        @keyframes spinBeat {
-            0% { transform: rotate(0deg) scale(1); }
-            30% { transform: rotate(8deg) scale(1.15); }
-            60% { transform: rotate(-6deg) scale(1.05); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-
         /* hidden youtube iframe */
         #music-player {
             display: none;
@@ -258,6 +291,11 @@
             .sub-invite {
                 font-size: 1rem;
                 padding: 8px 18px;
+            }
+            .music-info-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px;
             }
         }
 
@@ -285,33 +323,36 @@
     <div class="background-container"></div>
     <div class="overlay"></div>
 
-    <!-- PARTICLE CONTAINER (js will fill) -->
+    <!-- PARTICLE CONTAINER -->
     <div id="particle-field"></div>
 
-    <!-- 
-        ULTIMATE AUTO-PLAY MUSIC SOLUTION:
-        - Added &mute=0 (explicitly unmuted)
-        - Added allow="autoplay" 
-        - Uses YouTube iframe API approach with autoplay=1
-        - For maximum compatibility, we also attach a hidden click simulation?
-        But the most robust: embed with &autoplay=1 and mute=0. 
-        Modern browsers allow autoplay if iframe is loaded with user interaction on the page? 
-        We'll also preload with a dummy button-less approach.
-    -->
+    <!-- YOUTUBE IFRAME (hidden) -->
     <iframe id="music-player" 
         src="https://www.youtube.com/embed/5NQ-gTgJFjw?autoplay=1&mute=0&loop=1&playlist=5NQ-gTgJFjw&controls=0&showinfo=0&modestbranding=1&enablejsapi=1"
         allow="autoplay; encrypted-media"
         allowfullscreen>
     </iframe>
 
-    <!-- MAIN CONTENT (no click music trigger) -->
+    <!-- MAIN CONTENT -->
     <div class="content">
         <h1>APPLE GAMING FF</h1>
         
         <div class="sub-invite">
-            <i class="fas fa-play"></i> 
-            <span>🔥 স্বয়ংক্রিয় মিউজিক · AUTO PLAY 🔥</span>
+            <i class="fas fa-crown"></i> 
+            <span>🔥 ULTRA PRO MAX EDITION 🔥</span>
             <i class="fas fa-infinity"></i>
+        </div>
+
+        <!-- MUSIC INFO + CONTROL BAR (song name & on/off button) -->
+        <div class="music-info-bar">
+            <div class="song-info">
+                <i class="fas fa-compact-disc"></i>
+                <span class="song-name">♪ 5NQ-gTgJFjw · Itachi's Theme ♪</span>
+            </div>
+            <div id="musicToggleBtn" class="music-control-btn">
+                <i class="fas fa-play" id="musicIcon"></i>
+                <span id="musicBtnText">MUSIC ON</span>
+            </div>
         </div>
 
         <div class="links-grid">
@@ -321,65 +362,96 @@
             <a href="https://t.me/applegaming_ff" class="btn" target="_blank" rel="noopener">
                 <i class="fab fa-telegram-plane"></i> Telegram
             </a>
+            <!-- Changed to "Telegram Private Channel" as requested -->
             <a href="https://t.me/+KeEY2ASQ4Z9mYjc9" class="btn" target="_blank" rel="noopener">
-                <i class="fas fa-user-shield"></i> Private Group
+                <i class="fas fa-lock"></i> Telegram Private Channel
             </a>
+            <!-- Changed to "2nd Telegram Channel" for clarity -->
             <a href="https://t.me/applegaming20" class="btn" target="_blank" rel="noopener">
-                <i class="fas fa-paper-plane"></i> 2nd Channel
+                <i class="fab fa-telegram-plane"></i> 2nd Telegram Channel
             </a>
         </div>
 
-        <div style="margin-top: 25px; opacity:0.7; font-size:0.9rem; display: flex; gap: 8px; background: rgba(0,0,0,0.3); padding: 6px 18px; border-radius: 40px; backdrop-filter: blur(3px);">
+        <div style="margin-top: 20px; opacity:0.8; font-size:0.9rem; display: flex; gap: 8px; background: rgba(0,0,0,0.3); padding: 6px 18px; border-radius: 40px;">
             <i class="fas fa-volume-up" style="color:#ff4f4f;"></i>
-            <span>গান চলছে · Music auto‑play enabled</span>
+            <span>use the button above to control music</span>
         </div>
-    </div>
-
-    <!-- floating music indicator (purely visual, no click) -->
-    <div class="music-note">
-        <i class="fas fa-music"></i>
-        <span>AUTO MUSIC</span>
-        <i class="fas fa-check-circle" style="color:#00ff88;"></i>
     </div>
 
     <script>
-        // ========== ULTRA PRO MAX AUTO MUSIC ==========
-        // Goal: Music starts automatically on page load, no click needed.
-        // Force YouTube iframe to reload with autoplay parameters after page load
-        // Also we try to call playVideo() via YouTube API if possible.
-        
-        // 1. First technique: replace src after a tiny delay to ensure dom ready (but keep autoplay)
-        window.addEventListener('load', function() {
-            const player = document.getElementById('music-player');
-            // Ensure the src has autoplay=1 and mute=0 (already set, but we re-affirm)
-            let currentSrc = player.src;
-            // Remove any mute=1 if present, set mute=0 explicitly
-            if (currentSrc.includes('mute=1')) {
-                currentSrc = currentSrc.replace('mute=1', 'mute=0');
-            } else if (!currentSrc.includes('mute=0')) {
-                // add mute=0 if missing
-                currentSrc += '&mute=0';
-            }
-            // Ensure autoplay=1
-            if (!currentSrc.includes('autoplay=1')) {
-                currentSrc = currentSrc.replace('autoplay=0', 'autoplay=1'); // just in case
-                if (!currentSrc.includes('autoplay=1')) currentSrc += '&autoplay=1';
-            }
-            player.src = currentSrc;
+        // ========== YOUTUBE IFrame API ==========
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            // 2. Additionally, try to use YouTube iframe API to command play
-            // We'll inject a small script that communicates with the iframe
-            // For simplicity, we can also trigger a dummy click on document, but user said no click needed.
-            // The reload of src itself will trigger autoplay because allow=autoplay is set.
-            console.log('🎵 Auto music engaged · 播放音乐');
+        var player;
+        var isMusicPlaying = true; // starts playing
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('music-player', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.setVolume(70);
+            event.target.playVideo();  // auto-play
+            isMusicPlaying = true;
+            updateButtonUI();
+        }
+
+        function onPlayerStateChange(event) {
+            // Update button if video ends (but loop will restart)
+            if (event.data == YT.PlayerState.PLAYING) {
+                isMusicPlaying = true;
+            } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                isMusicPlaying = false;
+            }
+            updateButtonUI();
+        }
+
+        // Toggle music function
+        function toggleMusic() {
+            if (!player) return;
+            if (isMusicPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+            // isMusicPlaying will be updated by onPlayerStateChange
+        }
+
+        // Update button icon and text
+        function updateButtonUI() {
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicBtnText');
+            if (isMusicPlaying) {
+                icon.className = 'fas fa-pause';
+                text.innerText = 'MUSIC ON';
+            } else {
+                icon.className = 'fas fa-play';
+                text.innerText = 'MUSIC OFF';
+            }
+        }
+
+        // Attach event to toggle button
+        document.getElementById('musicToggleBtn').addEventListener('click', function(e) {
+            e.stopPropagation();  // prevent any accidental body click interference
+            toggleMusic();
         });
 
-        // Also try to play immediately after iframe loads (redundant but safe)
-        // For browsers that block autoplay, we can add a "silent" background interaction?
-        // But we trust the combination of allow=autoplay and &autoplay=1
-        // Another trick: pre-connect to youtube domain for faster load.
-        
-        // Create falling particles (visual only)
+        // Also ensure that clicking elsewhere does NOT affect music
+        document.body.addEventListener('click', function(e) {
+            // If the click is not on the toggle button, do nothing to music
+            // (but we don't want to stop music accidentally)
+            // So we just ignore.
+        });
+
+        // ========== FALLING PARTICLES ==========
         function createParticles() {
             for (let i = 0; i < 18; i++) {
                 const particle = document.createElement('div');
@@ -396,49 +468,6 @@
             }
         }
         window.addEventListener('load', createParticles);
-
-        // Optional: In very strict browsers, a user interaction is still required.
-        // We can simulate a click on body after 0.3s? But that may conflict with "no click".
-        // However, since the requirement is "ঢোকার সাথে সাথে গান বাজা শুরু করে" (start music as soon as you enter),
-        // we want zero click. So we'll also try to programmatically play via iframe's contentWindow.postMessage
-        // but that's unreliable cross-origin. Better: use YouTube's JS API.
-        // Let's implement proper YouTube IFrame API for ultimate control.
-
-        // This method uses YouTube Player API to ensure playback
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('music-player', {
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Player is ready, try to play and set volume
-            event.target.setVolume(70); // comfortable level
-            event.target.playVideo();    // explicitly start
-            console.log('YT Player ready · playing');
-        }
-
-        function onPlayerStateChange(event) {
-            // loop handling is already done via playlist parameter
-            if (event.data == YT.PlayerState.ENDED) {
-                // replay if needed, but playlist param handles loop
-            }
-        }
-
-        // fallback: if API fails, we already have iframe src reload method.
-        // Also, ensure that any accidental click on body doesn't stop music
-        // (the music-note has pointer-events: none so clicks pass through to body)
-        // But body clicks might still interact with iframe? They won't stop it.
-        // We also remove any onclick from content area that could restart/stop music.
     </script>
 </body>
 </html>
